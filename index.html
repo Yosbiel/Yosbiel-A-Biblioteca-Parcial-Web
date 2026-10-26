@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca - Parcial</title>
+    <!-- SEO basico -->
+    <meta name="description" content="Gestor de biblioteca para el parcial de Programacion Web.">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <header>
+        <!-- El saludo al usuario se inyecta con JS -->
+        <h1>Biblioteca <span id="saludo-usuario"></span></h1>
+        <nav>
+            <a href="#" class="activo" data-vista="catalogo">Catalogo</a>
+            <a href="#" data-vista="prestamos">Mis prestamos <span id="contador-prestamos">(0)</span></a>
+            <a href="#" data-vista="agregar">Agregar Libro</a>
+            <a href="#" data-vista="resumen">Resumen y Ajustes</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- VISTA 1: CATALOGO -->
+        <section id="vista-catalogo" class="vista activa">
+            <h2>Catalogo de Libros</h2>
+            
+            <div class="controles">
+                <input type="text" id="buscador" placeholder="Buscar por titulo o autor...">
+                <select id="filtro-genero">
+                    <option value="todos">Todos los generos</option>
+                </select>
+                <select id="ordenar-por">
+                    <option value="titulo">Ordenar por titulo</option>
+                    <option value="autor">Ordenar por autor</option>
+                    <option value="anio">Ordenar por año</option>
+                </select>
+                <button id="btn-orden" class="boton-secundario">Ascendente</button>
+            </div>
+            
+            <div class="botones-filtro">
+                <button class="filtro-estado activo" data-filtro="todos">Todos</button>
+                <button class="filtro-estado" data-filtro="disponibles">Disponibles</button>
+                <button class="filtro-estado" data-filtro="prestados">Prestados</button>
+            </div>
+            
+            <p id="contador-libros">Mostrando 0 de 0 libros</p>
+            <p id="mensaje-catalogo" class="mensaje-error"></p>
+
+            <!-- Aqui JS mete las tarjetas -->
+            <div id="contenedor-tarjetas" class="tarjetas"></div>
+        </section>
+
+        <!-- VISTA 2: MIS PRESTAMOS -->
+        <section id="vista-prestamos" class="vista">
+            <h2>Mis Prestamos Activos</h2>
+            <div id="lista-prestamos-activos"></div>
+
+            <h2>Historial de Prestamos</h2>
+            <div id="lista-historial"></div>
+        </section>
+
+        <!-- VISTA 3: AGREGAR / EDITAR LIBRO -->
+        <section id="vista-agregar" class="vista">
+            <h2 id="titulo-formulario">Agregar Libro</h2>
+            <p id="mensaje-formulario" class="mensaje-error"></p>
+            
+            <form id="form-libro">
+                <label for="libro-titulo">Titulo</label>
+                <input type="text" id="libro-titulo" required>
+                <span id="error-titulo" class="error-campo"></span>
+
+                <label for="libro-autor">Autor</label>
+                <input type="text" id="libro-autor" required>
+                <span id="error-autor" class="error-campo"></span>
+
+                <label for="libro-anio">Año</label>
+                <input type="number" id="libro-anio" required>
+                <span id="error-anio" class="error-campo"></span>
+
+                <label for="libro-genero">Genero</label>
+                <select id="libro-genero" required>
+                    <option value="novela">Novela</option>
+                    <option value="ciencia">Ciencia</option>
+                    <option value="historia">Historia</option>
+                    <option value="poesia">Poesia</option>
+                </select>
+
+                <label for="libro-comentario">Comentario (max 120)</label>
+                <textarea id="libro-comentario" rows="3"></textarea>
+                <span id="contador-comentario">120 caracteres restantes</span>
+
+                <div class="recordar">
+                    <input type="checkbox" id="libro-coleccion">
+                    <label for="libro-coleccion">Ejemplar de coleccion</label>
+                </div>
+
+                <button type="submit" id="btn-guardar-libro">Guardar Libro</button>
+                <button type="button" id="btn-cancelar-edicion" class="boton-secundario oculto">Cancelar Edicion</button>
+            </form>
+        </section>
+
+        <!-- VISTA 4: RESUMEN Y AJUSTES -->
+        <section id="vista-resumen" class="vista">
+            <h2>Resumen de la Biblioteca</h2>
+            
+            <!-- Imagen con su alt (accesibilidad) -->
+            <img src="img/biblioteca.jpg" alt="Estanteria llena de libros" class="imagen-resumen">
+            
+            <div id="resumen-datos" class="cajas"></div>
+
+            <h2>Ajustes</h2>
+            <div class="ajustes">
+                <div class="campo">
+                    <label for="nombre-usuario">Tu nombre (aparecera en el menu)</label>
+                    <input type="text" id="nombre-usuario" placeholder="Ej: Ana">
+                </div>
+                <button id="btn-tema" class="boton">Cambiar Tema</button>
+                <button id="btn-restablecer" class="boton-secundario">Restablecer Biblioteca</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Biblioteca Digital. Parcial de Programacion Web.</p>
+    </footer>
+
+    <!-- MODALES -->
+    <div id="modal-prestar" class="modal">
+        <div class="modal-contenido">
+            <h3>Prestar Libro</h3>
+            <p id="modal-prestar-titulo"></p>
+            <label for="modal-persona">A quien se lo prestas?</label>
+            <input type="text" id="modal-persona">
+            <p id="error-modal-prestar" class="error-campo"></p>
+            <div class="modal-botones">
+                <button type="button" id="btn-cancelar-prestar" class="boton-secundario">Cancelar</button>
+                <button type="button" id="btn-confirmar-prestar" class="boton">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-eliminar" class="modal">
+        <div class="modal-contenido">
+            <h3>Eliminar Libro</h3>
+            <p id="modal-eliminar-texto"></p>
+            <div class="modal-botones">
+                <button type="button" id="btn-cancelar-eliminar" class="boton-secundario">Cancelar</button>
+                <button type="button" id="btn-confirmar-eliminar" class="boton">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-restablecer" class="modal">
+        <div class="modal-contenido">
+            <h3>Restablecer Biblioteca</h3>
+            <p>Seguro que quieres borrar todo y volver al inicio?</p>
+            <div class="modal-botones">
+                <button type="button" id="btn-cancelar-restablecer" class="boton-secundario">Cancelar</button>
+                <button type="button" id="btn-confirmar-restablecer" class="boton">Si, restablecer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

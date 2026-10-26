@@ -1,0 +1,196 @@
+/* Reset basico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+    line-height: 1.5;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Header y navegacion */
+header {
+    background: #2b2b2b;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+header h1 { font-size: 22px; color: #ffb703; }
+nav { display: flex; gap: 15px; flex-wrap: wrap; }
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+nav a:hover, nav a.activo {
+    background: #ffb703;
+    color: #222;
+}
+
+/* Main y vistas */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    min-height: 70vh;
+}
+
+.vista {
+    display: none;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+.vista.activa { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 { margin-bottom: 15px; border-bottom: 2px solid #ffb703; padding-bottom: 5px; }
+
+/* Controles y filtros */
+.controles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+.controles input, .controles select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: white;
+    color: #222;
+}
+.botones-filtro { display: flex; gap: 10px; margin-bottom: 15px; }
+.filtro-estado {
+    background: #ccc; color: #222; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; transition: 0.3s;
+}
+.filtro-estado.activo { background: #ffb703; font-weight: bold; }
+
+/* Botones */
+.boton { background: #ffb703; color: #222; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;}
+.boton:hover { opacity: 0.8; }
+.boton-secundario { background: #ccc; color: #222; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;}
+.oculto { display: none !important; }
+
+/* Mensajes */
+.mensaje-error { color: #d9534f; font-weight: bold; margin-bottom: 10px; min-height: 20px;}
+.error-campo { color: #d9534f; font-size: 12px; display: block; margin-bottom: 10px; min-height: 15px;}
+
+/* Tarjetas */
+.tarjetas { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* auto-fill para que no se estiren */
+    gap: 20px; 
+}
+.tarjeta {
+    background: white; border-radius: 6px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+}
+.tarjeta:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.tarjeta.prestado { border: 2px solid #ffb703; }
+.tarjeta-contenido { padding: 15px; flex: 1; }
+.tarjeta h3 { margin-bottom: 5px; font-size: 17px; }
+.tarjeta p { font-size: 14px; color: #777; margin-bottom: 5px; }
+.etiqueta { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; background: #eee; color: #222; margin-bottom: 8px;}
+.etiqueta.vencido { background: #d9534f; color: white; }
+.etiqueta.coleccion { background: #5bc0de; color: white; }
+.tarjeta-botones { display: flex; gap: 5px; padding: 0 15px 15px; flex-wrap: wrap; }
+.tarjeta-botones button { flex: 1; padding: 8px; font-size: 12px; background: #2b2b2b; color: white; border: none; border-radius: 4px; cursor: pointer; }
+.tarjeta-botones button:hover { background: #ffb703; color: #222; }
+.tarjeta-botones button:disabled { background: #555; cursor: not-allowed; }
+
+/* Listas */
+.item-lista {
+    background: white; padding: 15px; margin-bottom: 10px; border-radius: 6px; border-left: 4px solid #ffb703;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.item-lista.vencido { border-left-color: #d9534f; }
+.item-lista-info p { margin-bottom: 2px; font-size: 14px; }
+
+/* Formularios */
+form { background: white; padding: 20px; border-radius: 6px; max-width: 500px; }
+form label { display: block; margin-top: 10px; margin-bottom: 4px; font-weight: bold; font-size: 14px; }
+form input, form select, form textarea {
+    width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit;
+    background: #f7f7f7; color: #222;
+}
+form button { margin-top: 15px; width: 100%; }
+.recordar { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+.recordar input { width: auto; }
+.recordar label { margin: 0; font-weight: normal; }
+
+/* Resumen y ajustes */
+.cajas { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px;}
+.caja { background: white; padding: 15px; border-radius: 6px; border-left: 3px solid #ffb703; text-align: center; }
+.caja h3 { margin-bottom: 5px; font-size: 14px; color: #777; }
+.caja p { font-size: 24px; font-weight: bold; }
+.ajustes { display: flex; flex-direction: column; gap: 15px; max-width: 400px; }
+
+/* Modales */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
+.modal.activo { display: flex; }
+.modal-contenido { background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; }
+.modal-contenido h3 { margin-bottom: 15px; }
+.modal-botones { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+
+/* Footer */
+footer { background: #2b2b2b; color: #bbb; text-align: center; padding: 15px; font-size: 14px; margin-top: 40px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    header { flex-direction: column; text-align: center; }
+    nav { justify-content: center; }
+}
+
+/* Clase para la fecha limite en las tarjetas */
+.fecha-limite-tarjeta {
+    font-size: 12px;
+    margin-top: 5px;
+    color: #222;
+}
+
+/* Imagen del resumen */
+.imagen-resumen {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 0 auto 30px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   TEMA OSCURO MANUAL (Para el botón)
+   ========================================= */
+body.tema-oscuro {
+    background: #1a1a1a;
+    color: #eee;
+}
+body.tema-oscuro h2 { color: #eee; }
+body.tema-oscuro .caja, 
+body.tema-oscuro .tarjeta, 
+body.tema-oscuro form,
+body.tema-oscuro .item-lista { background: #2a2a2a; color: #eee; }
+body.tema-oscuro .tarjeta h3 { color: #eee; }
+body.tema-oscuro .tarjeta p { color: #bbb; }
+body.tema-oscuro .controles input, 
+body.tema-oscuro .controles select { background: #2a2a2a; color: #eee; border-color: #444; }
+body.tema-oscuro form input, 
+body.tema-oscuro form select, 
+body.tema-oscuro form textarea { background: #1a1a1a; color: #eee; border-color: #444; }
+body.tema-oscuro .modal-contenido { background: #2a2a2a; color: #eee; }
+body.tema-oscuro .filtro-estado { background: #444; color: #eee; }
+body.tema-oscuro .boton-secundario { background: #444; color: white; }
+body.tema-oscuro .etiqueta { background: #444; color: white; }
+body.tema-oscuro .fecha-limite-tarjeta { color: #bbb; }
+body.tema-oscuro .imagen-resumen { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); opacity: 0.9; }
